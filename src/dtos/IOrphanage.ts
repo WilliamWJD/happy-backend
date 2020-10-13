@@ -1,3 +1,5 @@
+import ImagesDTO from './ImagesDTO';
+
 export default interface IOrphanage {
   name: string;
   latitude: number;
@@ -6,4 +8,5 @@ export default interface IOrphanage {
   instructions: string;
   opening_hours: string;
   open_on_weekends: boolean;
+  images: ImagesDTO[];
 }

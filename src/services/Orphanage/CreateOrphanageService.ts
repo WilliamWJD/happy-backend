@@ -2,6 +2,10 @@ import Orphanage from '../../entities/Orphanage';
 
 import OrphanageRepository from '../../repositories/OrphanageRepository';
 
+interface Images {
+  path: string;
+}
+
 interface IRequest {
   name: string;
   latitude: number;
@@ -10,6 +14,7 @@ interface IRequest {
   instructions: string;
   opening_hours: string;
   open_on_weekends: boolean;
+  images: Images[];
 }
 
 class CreateOrphanageService {
@@ -21,6 +26,7 @@ class CreateOrphanageService {
     longitude,
     open_on_weekends,
     opening_hours,
+    images,
   }: IRequest): Promise<Orphanage> {
     const orphanageRepository = new OrphanageRepository();
 
@@ -38,6 +44,7 @@ class CreateOrphanageService {
       longitude,
       open_on_weekends,
       opening_hours,
+      images,
     });
     return orphanage;
   }

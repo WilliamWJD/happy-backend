@@ -41,6 +41,11 @@ class OrphanagesController {
         open_on_weekends,
       } = req.body;
 
+      const reqImages = req.files as Express.Multer.File[];
+      const images = reqImages.map(image => {
+        return { path: image.filename };
+      });
+
       const orphanage = await createOrphanageService.execute({
         name,
         latitude,
@@ -49,6 +54,7 @@ class OrphanagesController {
         instructions,
         opening_hours,
         open_on_weekends,
+        images,
       });
 
       return res.status(201).json(orphanage);
