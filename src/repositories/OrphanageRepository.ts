@@ -23,6 +23,11 @@ class OrphanageRepository {
     });
     return orphanage || undefined;
   }
+
+  public async find(): Promise<Orphanage[] | undefined> {
+    const orphanages = await this.ormRepository.find();
+    return orphanages;
+  }
 }
 
 export default OrphanageRepository;
