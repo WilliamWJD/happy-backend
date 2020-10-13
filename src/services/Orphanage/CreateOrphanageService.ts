@@ -23,6 +23,13 @@ class CreateOrphanageService {
     opening_hours,
   }: IRequest): Promise<Orphanage> {
     const orphanageRepository = new OrphanageRepository();
+
+    const checkOrphanageByName = await orphanageRepository.findByName(name);
+
+    if (checkOrphanageByName) {
+      throw Error('This orphanage is already registered');
+    }
+
     const orphanage = await orphanageRepository.create({
       name,
       latitude,

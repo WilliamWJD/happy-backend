@@ -16,6 +16,13 @@ class OrphanageRepository {
     await this.ormRepository.save(orphanage);
     return orphanage;
   }
+
+  public async findByName(name: string): Promise<Orphanage | undefined> {
+    const orphanage = await this.ormRepository.findOne({
+      where: { name },
+    });
+    return orphanage || undefined;
+  }
 }
 
 export default OrphanageRepository;
