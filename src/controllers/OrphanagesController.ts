@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 
+import OrphanageView from '../views/orphanages_view';
+
 import CreateOrphanageService from '../services/Orphanage/CreateOrphanageService';
 import ListOrphanagesService from '../services/Orphanage/ListOrphanagesService';
 import ShowOrphanageService from '../services/Orphanage/ShowOrphanageService';
@@ -12,7 +14,7 @@ class OrphanagesController {
   async index(req: Request, res: Response): Promise<Response> {
     try {
       const orphanages = await listOrphanagesService.execute();
-      return res.json(orphanages);
+      return res.json(OrphanageView.renderMany(orphanages));
     } catch (err) {
       return res.json({ error: err.message });
     }
@@ -23,7 +25,7 @@ class OrphanagesController {
 
     try {
       const orphanage = await showOrphanageService.execute({ id: Number(id) });
-      return res.json(orphanage);
+      return res.json(OrphanageView.render(orphanage));
     } catch (err) {
       return res.json({ error: err.message });
     }
