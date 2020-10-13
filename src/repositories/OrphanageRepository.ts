@@ -25,12 +25,14 @@ class OrphanageRepository {
   }
 
   public async find(): Promise<Orphanage[] | undefined> {
-    const orphanages = await this.ormRepository.find();
+    const orphanages = await this.ormRepository.find({ relations: ['images'] });
     return orphanages;
   }
 
   public async findById(id: number): Promise<Orphanage | undefined> {
-    const orphanage = await this.ormRepository.findOne(id);
+    const orphanage = await this.ormRepository.findOne(id, {
+      relations: ['images'],
+    });
     return orphanage;
   }
 }
