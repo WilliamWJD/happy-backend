@@ -28,6 +28,11 @@ class OrphanageRepository {
     const orphanages = await this.ormRepository.find();
     return orphanages;
   }
+
+  public async findById(id: number): Promise<Orphanage | undefined> {
+    const orphanage = await this.ormRepository.findOne(id);
+    return orphanage;
+  }
 }
 
 export default OrphanageRepository;
