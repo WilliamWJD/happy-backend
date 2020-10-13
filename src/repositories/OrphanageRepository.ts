@@ -1,6 +1,6 @@
 import { Repository, getRepository } from 'typeorm';
 
-import IOrphanage from '../dtos/IOrphanage';
+import IOrphanage from '../dtos/IOrphanageDTO';
 
 import Orphanage from '../entities/Orphanage';
 
