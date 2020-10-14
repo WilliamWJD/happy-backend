@@ -9,11 +9,11 @@ import CreateOrphanageService from '../services/Orphanage/CreateOrphanageService
 import ListOrphanagesService from '../services/Orphanage/ListOrphanagesService';
 import ShowOrphanageService from '../services/Orphanage/ShowOrphanageService';
 
-const listOrphanagesService = new ListOrphanagesService();
-const showOrphanageService = new ShowOrphanageService();
-
 class OrphanagesController {
   async index(req: Request, res: Response): Promise<Response> {
+    const orphangeRepository = new OrphanageRepository();
+    const listOrphanagesService = new ListOrphanagesService(orphangeRepository);
+
     try {
       const orphanages = await listOrphanagesService.execute();
       return res.json(OrphanageView.renderMany(orphanages));
@@ -23,6 +23,9 @@ class OrphanagesController {
   }
 
   async show(req: Request, res: Response): Promise<Response> {
+    const orphangeRepository = new OrphanageRepository();
+    const showOrphanageService = new ShowOrphanageService(orphangeRepository);
+
     const { id } = req.params;
 
     try {
