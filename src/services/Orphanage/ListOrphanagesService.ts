@@ -1,11 +1,11 @@
+import IOrphanageRepository from 'repositories/IOrphanageRepository';
 import Orphanage from '../../entities/Orphanage';
 
-import OrphanageRepository from '../../repositories/OrphanageRepository';
-
 class CreateOrphanageService {
+  constructor(private orphanageRepository: IOrphanageRepository) {}
+
   public async execute(): Promise<Orphanage[] | undefined> {
-    const orphanageRepository = new OrphanageRepository();
-    const orphanages = await orphanageRepository.find();
+    const orphanages = await this.orphanageRepository.find();
     return orphanages;
   }
 }
