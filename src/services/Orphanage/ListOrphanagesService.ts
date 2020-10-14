@@ -6,7 +6,7 @@ class CreateOrphanageService {
   public async execute(): Promise<Orphanage[] | undefined> {
     const orphanageRepository = new OrphanageRepository();
     const orphanages = await orphanageRepository.find();
-    return orphanages || undefined;
+    return orphanages;
   }
 }
 
