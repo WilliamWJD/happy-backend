@@ -3,8 +3,9 @@ import { Repository, getRepository } from 'typeorm';
 import IOrphanage from '../dtos/IOrphanageDTO';
 
 import Orphanage from '../entities/Orphanage';
+import IOrphanageRepository from './IOrphanageRepository';
 
-class OrphanageRepository {
+class OrphanageRepository implements IOrphanageRepository {
   private ormRepository: Repository<Orphanage>;
 
   constructor() {

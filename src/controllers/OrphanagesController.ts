@@ -3,11 +3,12 @@ import * as Yup from 'yup';
 
 import OrphanageView from '../views/orphanages_view';
 
+import OrphanageRepository from '../repositories/OrphanageRepository';
+
 import CreateOrphanageService from '../services/Orphanage/CreateOrphanageService';
 import ListOrphanagesService from '../services/Orphanage/ListOrphanagesService';
 import ShowOrphanageService from '../services/Orphanage/ShowOrphanageService';
 
-const createOrphanageService = new CreateOrphanageService();
 const listOrphanagesService = new ListOrphanagesService();
 const showOrphanageService = new ShowOrphanageService();
 
@@ -33,6 +34,12 @@ class OrphanagesController {
   }
 
   async store(req: Request, res: Response): Promise<Response> {
+    const orphangeRepository = new OrphanageRepository();
+
+    const createOrphanageService = new CreateOrphanageService(
+      orphangeRepository,
+    );
+
     try {
       const schema = Yup.object().shape({
         name: Yup.string().required(),

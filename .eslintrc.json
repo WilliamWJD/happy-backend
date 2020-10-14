@@ -26,6 +26,7 @@
     "rules": {
       "class-methods-use-this":"off",
       "camelcase":"off",
+      "no-useless-constructor":"off",
       "import/extensions": [
         "error",
         "ignorePackages",

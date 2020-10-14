@@ -1,6 +1,5 @@
+import IOrphanageRepository from 'repositories/IOrphanageRepository';
 import Orphanage from '../../entities/Orphanage';
-
-import OrphanageRepository from '../../repositories/OrphanageRepository';
 
 interface Images {
   path: string;
@@ -18,6 +17,8 @@ interface IRequest {
 }
 
 class CreateOrphanageService {
+  constructor(private orphanageRepository: IOrphanageRepository) {}
+
   public async execute({
     name,
     latitude,
@@ -28,15 +29,15 @@ class CreateOrphanageService {
     opening_hours,
     images,
   }: IRequest): Promise<Orphanage> {
-    const orphanageRepository = new OrphanageRepository();
-
-    const checkOrphanageByName = await orphanageRepository.findByName(name);
+    const checkOrphanageByName = await this.orphanageRepository.findByName(
+      name,
+    );
 
     if (checkOrphanageByName) {
       throw Error('This orphanage is already registered');
     }
 
-    const orphanage = await orphanageRepository.create({
+    const orphanage = await this.orphanageRepository.create({
       name,
       latitude,
       about,
