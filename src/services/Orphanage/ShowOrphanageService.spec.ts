@@ -1,19 +1,19 @@
 import FakeOrphanageRepository from '../../repositories/fakes/FakeOrphanageRepository';
-import ListOrphanageService from './ListOrphanagesService';
+import ShowOrphanageService from './ShowOrphanageService';
 import CreateOrphanageService from './CreateOrphanageService';
 
 let orphanageRepository: FakeOrphanageRepository;
 let createOrphanageService: CreateOrphanageService;
-let listOrphanageService: ListOrphanageService;
+let showOrphanageService: ShowOrphanageService;
 
-describe('ListOrphanages', () => {
+describe('ShowOrphanages', () => {
   beforeEach(() => {
     orphanageRepository = new FakeOrphanageRepository();
     createOrphanageService = new CreateOrphanageService(orphanageRepository);
-    listOrphanageService = new ListOrphanageService(orphanageRepository);
+    showOrphanageService = new ShowOrphanageService(orphanageRepository);
   });
 
-  it('shoud be able to list orphanages', async () => {
+  it('shoud be able to list a specific orphanage', async () => {
     const orphanage1 = await createOrphanageService.execute({
       name: 'Lar das crianças',
       latitude: -2.123145,
@@ -25,7 +25,7 @@ describe('ListOrphanages', () => {
       images: [{ path: 'teste.png' }],
     });
 
-    const orphanage2 = await createOrphanageService.execute({
+    await createOrphanageService.execute({
       name: 'Lar das crianças2',
       latitude: -2.123145,
       longitude: -2.123145,
@@ -36,8 +36,27 @@ describe('ListOrphanages', () => {
       images: [{ path: 'teste.png' }],
     });
 
-    const orphanages = await listOrphanageService.execute();
+    const orphanages = await showOrphanageService.execute({
+      id: orphanage1.id,
+    });
 
-    expect(orphanages).toEqual([orphanage1, orphanage2]);
+    expect(orphanages.name).toBe('Lar das crianças');
+  });
+
+  it('should not be able to list a orphanage inexisting', async () => {
+    await createOrphanageService.execute({
+      name: 'Lar das crianças',
+      latitude: -2.123145,
+      longitude: -2.123145,
+      about: 'teste',
+      instructions: 'teste',
+      opening_hours: 'teste',
+      open_on_weekends: false,
+      images: [{ path: 'teste.png' }],
+    });
+
+    await expect(
+      showOrphanageService.execute({ id: 1 }),
+    ).rejects.toBeInstanceOf(Error);
   });
 });

@@ -1,16 +1,15 @@
+import IOrphanageRepository from 'repositories/IOrphanageRepository';
 import Orphanage from '../../entities/Orphanage';
-
-import OrphanageRepository from '../../repositories/OrphanageRepository';
 
 interface IRequest {
   id: number;
 }
 
 class CreateOrphanageService {
-  public async execute({ id }: IRequest): Promise<Orphanage> {
-    const orphanageRepository = new OrphanageRepository();
+  constructor(private orphanageRepository: IOrphanageRepository) {}
 
-    const orphanage = await orphanageRepository.findById(id);
+  public async execute({ id }: IRequest): Promise<Orphanage> {
+    const orphanage = await this.orphanageRepository.findById(id);
 
     if (!orphanage) {
       throw Error('Orphanage not found');
