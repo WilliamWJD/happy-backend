@@ -6,12 +6,15 @@ module.exports = {
   "password": process.env.DB_PASSWORD,
   "database": process.env.DB_NAME,
   "entities": [
-    "./src/entities/*.ts"
+    // "./src/entities/*.ts"
+    "./dist/entities/*.js"
   ],
   "migrations": [
-    "./src/database/migrations/*.ts"
+    // "./src/database/migrations/*.ts"
+    "./dist/database/migrations/*.js"
   ],
   "cli": {
-    "migrationsDir": "./src/database/migrations"
+    // "migrationsDir": "./src/database/migrations"
+    "migrationsDir": "./dist/database/migrations"
   }
 }
